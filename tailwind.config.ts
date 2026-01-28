@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-import plugin from "tailwindcss/plugin"; // Importante para adicionar CSS customizado
+import plugin from "tailwindcss/plugin"; 
 
 const config: Config = {
   content: [
@@ -13,10 +13,11 @@ const config: Config = {
   plugins: [
     plugin(function({ addUtilities }) {
       addUtilities({
-        /* O erro acontecia porque aqui precisa ser um objeto JS, não CSS puro */
+      
         '.scrollbar-spotify': {
           '&::-webkit-scrollbar': {
             width: '10px' ,
+            height: '1px',
           },
           '&::-webkit-scrollbar-track': {
             background: 'transparent',

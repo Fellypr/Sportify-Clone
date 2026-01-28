@@ -1,38 +1,46 @@
-import { HomeIcon, Library, Play, Search } from "lucide-react";
+"use client";
+
+import InputBiblioteca from "../input-biblioteca/InputBiblioteca";
+import CardBiblioteca from "../card-biblioteca/CardBiblioteca";
 export default function Biblioteca() {
   return (
     <>
-      <nav className="space-y-4">
-        <a
-          href=""
-          className="flex items-center gap-3 text-sm font-semibold text-zinc-200"
-        >
-          <HomeIcon /> Início
-        </a>
-        <a
-          href=""
-          className="flex items-center gap-3 text-sm font-semibold text-zinc-200"
-        >
-          <Search /> Buscar
-        </a>
-      </nav>
-
-      <div className="mt-4 pt-4 border-t border-zinc-800 flex flex-col gap-4">
-        <div className="flex items-center justify-between text-zinc-400">
-          <span className="flex items-center gap-2">
-            <Library /> Sua Biblioteca
+      <nav className="space-y-4 h-auto pb-4 px-2">
+        <div className="flex items-center justify-between">
+          <h1 className="text-[15px] font-bold">Sua biblioteca</h1>
+          <span className="text-3xl text-white/60 bg-zinc-800/30 w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800/50 transition cursor-pointer hover:text-white/80">
+            +
           </span>
-          <span className="text-2xl">+</span>
         </div>
-        {/* Exemplo de item da biblioteca */}
-        <div className="flex items-center gap-3 hover:bg-zinc-900 p-2 rounded cursor-pointer transition">
-          <div className="w-12 h-12 bg-purple-600 rounded flex items-center justify-center shadow-lg">
-            <Play fill="white" size={16} />
-          </div>
+        <div className="flex gap-2">
+          <button className="bg-zinc-700/40 text-[13px] pl-3.5 pr-3.5 pt-1.5 pb-1.5 rounded-[23px] text-white/85 hover:bg-zinc-700/60 cursor-pointer">
+            Playlists
+          </button>
+          <button className="bg-zinc-700/40 text-[13px] pl-3.5 pr-3.5 pt-1.5 pb-1.5 rounded-[23px] text-white/85 hover:bg-zinc-700/60 cursor-pointer">
+            Artistas
+          </button>
+        </div>
+      </nav>
+      <div className="overflow-y-auto h-[500px] scrollbar-spotify">
+        <div className=" flex flex-col gap-1">
           <div>
-            <p className="text-sm font-bold">Músicas Curtidas</p>
-            <p className="text-xs text-zinc-400">Playlist • 23 músicas</p>
+            <InputBiblioteca />
           </div>
+          <CardBiblioteca />
+          <CardBiblioteca />
+          <CardBiblioteca />
+          <CardBiblioteca />
+          <CardBiblioteca />
+          <CardBiblioteca />
+          <CardBiblioteca />
+          <CardBiblioteca />
+          <CardBiblioteca />
+          <CardBiblioteca />
+          <CardBiblioteca />
+          <CardBiblioteca />
+          <CardBiblioteca />
+          <CardBiblioteca />
+          <CardBiblioteca />
         </div>
       </div>
     </>

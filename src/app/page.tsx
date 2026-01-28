@@ -71,7 +71,7 @@ export default function SpotifyClone() {
           style={{ width: leftWidth }}
           className="bg-zinc-950 rounded-lg flex flex-col overflow-hidden relative"
         >
-          <div className="flex-1 overflow-y-auto p-4 scrollbar-spotify">
+          <div className="flex-1 overflow-y-hidden p-3 scrollbar-spotify">
             <Biblioteca />
           </div>
 
