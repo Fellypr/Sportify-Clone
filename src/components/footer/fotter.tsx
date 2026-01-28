@@ -18,7 +18,7 @@ export default function Footer() {
         <div className="flex items-center gap-6">
           <Shuffle size={20} className="text-green-500" />
           <SkipBack size={20} className="text-zinc-200" />
-          <button className="w-10 h-10 flex items-center justify-center pl-1 rounded-full bg-white text-black">
+          <button className="w-10 h-10 flex items-center justify-center p-1 rounded-full bg-white text-black">
             <Play fill="black" />
           </button>
           <SkipForward size={20} className="text-zinc-200" />
