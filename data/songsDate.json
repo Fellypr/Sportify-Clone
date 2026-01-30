@@ -1,0 +1,103 @@
+[
+  {
+    "id": "1",
+    "title": "Baby Mandala | Nepalese Drill Music",
+    "artist": "kontraa",
+    "duration": 191, 
+    "cover": "/covers/ambient-gold.jpg",
+    "audioUrl": "songs/baby-mandala-nepalese-drill-music-169039.mp3",
+    "themeColor": "#e91e63",
+    "isLiked": false
+  },
+  {
+    "id": "2",
+    "title": "Chinese Lunar New Year",
+    "artist": "original_soundtrack",
+    "duration": 171,
+    "cover": "/covers/urban-nights.jpg",
+    "audioUrl": "songs/chinese-lunar-new-year-465871.mp3",
+    "themeColor": "#5038a0",
+    "isLiked": false
+  },
+  {
+    "id": "3",
+    "title": "Creative Technology Showreel",
+    "artist": "Pumpupthemind",
+    "duration": 110,
+    "cover": "/covers/summer-lofi.jpg",
+    "audioUrl": "songs/creative-technology-showreel-241274.mp3",
+    "themeColor": "#e91e63",
+    "isLiked": false
+  },
+  {
+    "id": "4",
+    "title": "Dark Cyberpunk",
+    "artist": "FreeMusicLab",
+    "duration": 119,
+    "cover": "/covers/summer-lofi.jpg",
+    "audioUrl": "songs/dark-cyberpunk-i-free-background-music-i-free-music-lab-release-469493.mp3",
+    "themeColor": "#e91e63",
+    "isLiked": false
+  },
+  {
+    "id": "5",
+    "title": "Gorila",
+    "artist": "Alex_MakeMusic",
+    "duration": 115,
+    "cover": "/covers/summer-lofi.jpg",
+    "audioUrl": "songs/gorila-315977.mp3",
+    "themeColor": "#e91e63",
+    "isLiked": false
+  },
+  {
+    "id": "6",
+    "title": "Lo-fi Music Loop - Sentimental Jazzy Love",
+    "artist": "Sonican",
+    "duration": 100,
+    "cover": "/covers/summer-lofi.jpg",
+    "audioUrl": "songs/lo-fi-music-loop-sentimental-jazzy-love-473154.mp3",
+    "themeColor": "#e91e63",
+    "isLiked": false
+  },
+  {
+    "id": "7",
+    "title": "Night Summer Lounge",
+    "artist": "Bransboynd",
+    "duration": 102,
+    "cover": "/covers/summer-lofi.jpg",
+    "audioUrl": "songs/night-summer-lounge-473222.mp3",
+    "themeColor": "#e91e63",
+    "isLiked": false
+  },
+  {
+    "id": "8",
+    "title": "No Sleep ",
+    "artist": "kontraa",
+    "duration": 167,
+    "cover": "/covers/summer-lofi.jpg",
+    "audioUrl": "songs/no-sleep-hiphop-music-473847.mp3",
+    "themeColor": "#e91e63",
+    "isLiked": false
+  },
+  {
+    "id": "9",
+    "title": "Science Documentary",
+    "artist": "Lexin_Music",
+    "duration": 127,
+    "cover": "/covers/summer-lofi.jpg",
+    "audioUrl": "songs/science-documentary-169621.mp3",
+    "themeColor": "#e91e63",
+    "isLiked": false
+  },
+  {
+    "id": "10",
+    "title": "Tell Me The Truth",
+    "artist": "Denys_Brodovskyi",
+    "duration": 188,
+    "cover": "/covers/summer-lofi.jpg",
+    "audioUrl": "songs/tell-me-the-truth-260010.mp3",
+    "themeColor": "#e91e63",
+    "isLiked": false
+  }
+
+]
