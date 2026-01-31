@@ -1,6 +1,39 @@
 import { Play } from "lucide-react";
+import { useState, useEffect } from "react";
 
+interface Song {
+  id: number;
+  title: string;
+  artist: string;
+  duration: number;
+  audioUrl: string;
+  themeColor: string;
+  isLiked: boolean;
+  imageUrl: string;
+}
 export default function FeedPrincipal() {
+  const [songs, SetSongs] = useState<Song[]>([]);
+
+  useEffect(() => {
+    fetch("/data/songsDate.json")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data && Array.isArray(data.songs)) {
+          SetSongs(data.songs);
+        } else if (Array.isArray(data)) {
+          SetSongs(data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching songs:", error);
+      });
+  }, []);
+  console.log(songs);
   return (
     <>
       <div className="flex gap-2">
@@ -15,21 +48,18 @@ export default function FeedPrincipal() {
         </button>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-2 gap-4 mt-6">
-        {[
-          "Stay With Me",
-          "Skillet",
-          "Programar",
-          "Rise",
-          "Awake",
-          "Treino",
-        ].map((item) => (
+      <div className="grid grid-cols-2 lg:grid-cols-2 gap-3 mt-6">
+        {songs.slice(0, 8).map((item) => (
           <div
-            key={item}
+            key={item.id}
             className="bg-white/5 group rounded flex items-center gap-4 overflow-hidden hover:bg-white/10 transition-colors cursor-pointer w-auto h-[40px]"
           >
-            <div className="w-9 h-9 bg-zinc-700 shadow-[5px_0_15px_rgba(0,0,0,0.5)]" />
-            <strong className="text-[12px]">{item}</strong>
+            <img
+              src={item.imageUrl}
+              alt={item.title}
+              className="w-10 h-10 rounded-md z-20"
+            />
+            <strong className="text-[12px]">{item.title}</strong>
             <button className="w-7 h-7 flex items-center justify-center p-1 rounded-full bg-green-500 text-black ml-auto mr-4 invisible group-hover:visible shadow-xl">
               <Play fill="black" size={16} />
             </button>
@@ -39,14 +69,15 @@ export default function FeedPrincipal() {
 
       <p className="text-sm text-zinc-400 mt-8">Feito para </p>
       <h2 className="text-2xl font-bold ">Fellype kenned</h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-1 mt-4">
-        <div className="w-[160px] p-3 rounded-md hover:bg-zinc-900 transition-colors cursor-pointer">
-          <div className="w-full aspect-square bg-zinc-700 rounded-md mb-2 shadow-lg" />
-          <strong className="font-normal">Descobertas da Semana</strong>
-          <p className="text-sm text-zinc-400 mt-1">
-            Sua dose semanal de músicas novas.
-          </p>
-        </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-1 mt-4">
+        {songs.slice(0, 8).map((item) => (
+          <div className="w-[160px] p-3 rounded-md hover:bg-zinc-900 transition-colors cursor-pointer" key={item.id}>
+            <img className="w-full aspect-square bg-zinc-700 rounded-md mb-2 shadow-lg" src={item.imageUrl} alt={item.title} />
+            <strong className="font-normal">{item.title}</strong>
+            <p className="text-sm text-zinc-400 mt-1">{item.artist}</p>
+          </div>
+        ))}
       </div>
     </>
   );

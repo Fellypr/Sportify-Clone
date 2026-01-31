@@ -1,50 +1,126 @@
-import{ Laptop2, LayoutList, Maximize2, Mic2, Repeat, Shuffle, SkipBack, SkipForward, Play, Volume2 } from "lucide-react";
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+import { 
+  Laptop2, LayoutList, Maximize2, Mic2, Repeat, 
+  Shuffle, SkipBack, SkipForward, Play, Pause, Volume2 
+} from "lucide-react";
+
 export default function Footer() {
+  // Estados para o Player
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [progress, setProgress] = useState<number>(0); // em porcentagem
+  const [currentTime, setCurrentTime] = useState<number>(0); // em segundos
+  const [duration, setDuration] = useState<number>(0); // em segundos
+  const [volume, setVolume] = useState<number>(0.5);
+
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  // Alternar Play/Pause
+  const togglePlay = () => {
+    if (isPlaying) {
+      audioRef.current?.pause();
+    } else {
+      audioRef.current?.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  // Atualizar progresso enquanto a música toca
+  const onTimeUpdate = () => {
+    if (audioRef.current) {
+      const current = audioRef.current.currentTime;
+      const total = audioRef.current.duration;
+      setCurrentTime(current);
+      setDuration(total);
+      setProgress((current / total) * 100);
+    }
+  };
+
+  // Formatar segundos para MM:SS
+  const formatTime = (time: number) => {
+    if (isNaN(time)) return "0:00";
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  };
+
+  // Mudar volume
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+
   return (
-    <>
+    <footer className="w-full flex items-center justify-between">
+      {/* Áudio Escondido */}
+      <audio 
+        ref={audioRef} 
+        src="songs/no-sleep-hiphop-music-473847.mp3" // Caminho da sua música na pasta public
+        onTimeUpdate={onTimeUpdate}
+        onLoadedMetadata={onTimeUpdate}
+      />
+
+      {/* Info da Música */}
       <div className="flex items-center gap-3 w-[30%]">
-        <div className="w-14 h-14 bg-zinc-800 rounded shadow-md" />
+        <div className="w-14 h-14 bg-zinc-800 rounded shadow-md overflow-hidden">
+          <img src="/covers/album-art.jpg" alt="Capa" className="w-full h-full object-cover" />
+        </div>
         <div className="flex flex-col">
-          <span className="text-sm font-normal hover:underline cursor-pointer">
-            Máquina do Tempo
-          </span>
-          <span className="text-xs text-zinc-400 hover:underline cursor-pointer">
-            Matuê
-          </span>
+          <span className="text-sm font-normal hover:underline cursor-pointer">Máquina do Tempo</span>
+          <span className="text-xs text-zinc-400 hover:underline cursor-pointer">Matuê</span>
         </div>
       </div>
 
+      {/* Controles Principais */}
       <div className="flex flex-col items-center gap-2 w-[40%]">
-        <div className="flex items-center gap-6">
-          <Shuffle size={20} className="text-green-500" />
-          <SkipBack size={20} className="text-zinc-200" />
-          <button className="w-10 h-10 flex items-center justify-center p-1 rounded-full bg-white text-black">
-            <Play fill="black" />
+        <div className="flex items-center gap-6 text-zinc-400">
+          <Shuffle size={20} className="hover:text-white cursor-pointer" />
+          <SkipBack size={20} className="hover:text-white cursor-pointer fill-zinc-400" />
+          
+          <button 
+            onClick={togglePlay}
+            className="cursor-pointer w-10 h-10 flex items-center justify-center rounded-full bg-white text-black hover:scale-105 transition"
+          >
+            {isPlaying ? <Pause fill="black" size={20} /> : <Play fill="black" size={20} />}
           </button>
-          <SkipForward size={20} className="text-zinc-200" />
-          <Repeat size={20} className="text-zinc-200" />
+
+          <SkipForward size={20} className="hover:text-white cursor-pointer fill-zinc-400" />
+          <Repeat size={20} className="hover:text-white cursor-pointer" />
         </div>
-        <div className="flex items-center gap-2 w-full">
-          <span className="text-xs text-zinc-400">0:10</span>
-          <div className="h-1 rounded-full flex-1 bg-zinc-600">
-            <div className="bg-zinc-200 w-1/12 h-1 rounded-full" />
+
+        {/* Barra de Progresso */}
+        <div className="flex items-center gap-2 w-full group">
+          <span className="text-xs text-zinc-400 w-10 text-right">{formatTime(currentTime)}</span>
+          <div className="h-1 rounded-full flex-1 bg-zinc-600 relative overflow-hidden">
+            <div 
+              className="bg-zinc-200 h-full rounded-full group-hover:bg-green-500 transition-colors" 
+              style={{ width: `${progress}%` }} 
+            />
           </div>
-          <span className="text-xs text-zinc-400">3:50</span>
+          <span className="text-xs text-zinc-400 w-10">{formatTime(duration)}</span>
         </div>
       </div>
 
+      {/* Controles Auxiliares e Volume */}
       <div className="flex items-center gap-4 w-[30%] justify-end">
-        <Mic2 size={18} className="text-zinc-400" />
-        <LayoutList size={18} className="text-zinc-400" />
-        <Laptop2 size={18} className="text-zinc-400" />
+        <Mic2 size={18} className="text-zinc-400 hover:text-white cursor-pointer" />
+        <LayoutList size={18} className="text-zinc-400 hover:text-white cursor-pointer" />
+        <Laptop2 size={18} className="text-zinc-400 hover:text-white cursor-pointer" />
+        
         <div className="flex items-center gap-2">
           <Volume2 size={18} className="text-zinc-400" />
-          <div className="h-1 rounded-full w-24 bg-zinc-600">
-            <div className="bg-zinc-200 w-2/3 h-1 rounded-full" />
-          </div>
+          <input 
+            type="range"
+            min="0" max="1" step="0.01"
+            value={volume}
+            onChange={(e) => setVolume(parseFloat(e.target.value))}
+            className="w-24 h-1 accent-white hover:accent-green-500 cursor-pointer"
+          />
         </div>
-        <Maximize2 size={18} className="text-zinc-400" />
+        <Maximize2 size={18} className="text-zinc-400 hover:text-white cursor-pointer" />
       </div>
-    </>
+    </footer>
   );
 }
