@@ -7,16 +7,15 @@ import {
 } from "lucide-react";
 
 export default function Footer() {
-  // Estados para o Player
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [progress, setProgress] = useState<number>(0); // em porcentagem
-  const [currentTime, setCurrentTime] = useState<number>(0); // em segundos
-  const [duration, setDuration] = useState<number>(0); // em segundos
+  const [progress, setProgress] = useState<number>(0);
+  const [currentTime, setCurrentTime] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(0);
   const [volume, setVolume] = useState<number>(0.5);
 
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // Alternar Play/Pause
+  
   const togglePlay = () => {
     if (isPlaying) {
       audioRef.current?.pause();
@@ -26,7 +25,7 @@ export default function Footer() {
     setIsPlaying(!isPlaying);
   };
 
-  // Atualizar progresso enquanto a música toca
+  
   const onTimeUpdate = () => {
     if (audioRef.current) {
       const current = audioRef.current.currentTime;
@@ -37,7 +36,7 @@ export default function Footer() {
     }
   };
 
-  // Formatar segundos para MM:SS
+  
   const formatTime = (time: number) => {
     if (isNaN(time)) return "0:00";
     const minutes = Math.floor(time / 60);
@@ -45,7 +44,7 @@ export default function Footer() {
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
 
-  // Mudar volume
+  
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume;
@@ -54,15 +53,15 @@ export default function Footer() {
 
   return (
     <footer className="w-full flex items-center justify-between">
-      {/* Áudio Escondido */}
+      
       <audio 
         ref={audioRef} 
-        src="songs/no-sleep-hiphop-music-473847.mp3" // Caminho da sua música na pasta public
+        src="songs/no-sleep-hiphop-music-473847.mp3"
         onTimeUpdate={onTimeUpdate}
         onLoadedMetadata={onTimeUpdate}
       />
 
-      {/* Info da Música */}
+      
       <div className="flex items-center gap-3 w-[30%]">
         <div className="w-14 h-14 bg-zinc-800 rounded shadow-md overflow-hidden">
           <img src="/covers/album-art.jpg" alt="Capa" className="w-full h-full object-cover" />
@@ -73,7 +72,7 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Controles Principais */}
+      
       <div className="flex flex-col items-center gap-2 w-[40%]">
         <div className="flex items-center gap-6 text-zinc-400">
           <Shuffle size={20} className="hover:text-white cursor-pointer" />
@@ -90,7 +89,7 @@ export default function Footer() {
           <Repeat size={20} className="hover:text-white cursor-pointer" />
         </div>
 
-        {/* Barra de Progresso */}
+        
         <div className="flex items-center gap-2 w-full group">
           <span className="text-xs text-zinc-400 w-10 text-right">{formatTime(currentTime)}</span>
           <div className="h-1 rounded-full flex-1 bg-zinc-600 relative overflow-hidden">
@@ -103,7 +102,7 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Controles Auxiliares e Volume */}
+      
       <div className="flex items-center gap-4 w-[30%] justify-end">
         <Mic2 size={18} className="text-zinc-400 hover:text-white cursor-pointer" />
         <LayoutList size={18} className="text-zinc-400 hover:text-white cursor-pointer" />
