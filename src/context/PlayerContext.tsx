@@ -11,8 +11,11 @@ interface Track {
 interface PlayerContextType {
     currentTrack: Track | null;
     isPlaying:boolean;
+    viewAlbum: boolean;
+    setViewAlbum: (value: boolean) => void;
     PlayTrack: (track: Track) => void;
     TogglePlay: () => void;
+    ViewAlbum: (item: Track) => void;
 }
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
@@ -20,6 +23,12 @@ const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
 export default function PlayerProvider({ children }: { children: ReactNode }) {
     const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
+    const [viewAlbum, setViewAlbum] = useState<boolean>(false);
+
+    function ViewAlbum(item: Track) {
+        setViewAlbum(true);
+        setCurrentTrack(item);
+    }
 
     function PlayTrack(track: Track) {
         setCurrentTrack(track);
@@ -31,7 +40,7 @@ export default function PlayerProvider({ children }: { children: ReactNode }) {
         
     }
   return(
-    <PlayerContext.Provider value={{ currentTrack, isPlaying, PlayTrack, TogglePlay }}>
+    <PlayerContext.Provider value={{ currentTrack, isPlaying, PlayTrack, TogglePlay, ViewAlbum, viewAlbum,setViewAlbum}}>
       {children}
     </PlayerContext.Provider>
   );

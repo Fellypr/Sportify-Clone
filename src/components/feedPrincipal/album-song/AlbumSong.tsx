@@ -1,6 +1,6 @@
 "use client";
 
-import { Play, PlusCircle, Clock, List, ChevronLeft } from "lucide-react";
+import { Play, PlusCircle, Clock, List, Pause } from "lucide-react";
 import { usePlayer } from "@/context/PlayerContext";
 import { useEffect, useState } from "react";
 
@@ -13,13 +13,8 @@ interface Song {
   themeColor: string;
 }
 
-interface AlbumSongProps {
-  id: number | null;
-  onBack: () => void;
-}
-
-export default function AlbumSong({ id, onBack }: AlbumSongProps) {
-  const { currentTrack,PlayTrack } = usePlayer();
+export default function AlbumSong() {
+  const { currentTrack,TogglePlay,isPlaying } = usePlayer();
 
 
 
@@ -27,17 +22,11 @@ export default function AlbumSong({ id, onBack }: AlbumSongProps) {
 
   return (
     <div className="flex-1 bg-zinc-900 overflow-y-auto scrollbar-spotify rounded-lg">
-      <nav className="p-4 sticky top-0 bg-black/20 backdrop-blur-md z-10">
-        <button onClick={onBack} className="p-2 rounded-full bg-black/40 hover:bg-black/60 transition">
-          <ChevronLeft size={24} />
-        </button>
-      </nav>
-
       <header className={`p-8 flex items-end gap-6 bg-gradient-to-b ${currentTrack?.themeColor || 'from-zinc-700'} to-zinc-900`}>
-        <img src={currentTrack.imageUrl} alt={currentTrack.title} className="w-52 h-52 shadow-2xl rounded-sm" />
+        <img src={currentTrack.imageUrl} alt={currentTrack.title} className="w-40 h-40 shadow-2xl rounded-sm object-cover" />
         <div className="flex flex-col">
-          <span className="text-sm font-bold uppercase">Single</span>
-          <h1 className="text-7xl font-black mt-2 mb-6">{currentTrack.title}</h1>
+          <span className="text-[12px] font-medium uppercase">Single</span>
+          <h1 className="text-6xl font-black mt-2 mb-6">{currentTrack.title}</h1>
           <div className="flex items-center gap-2 text-sm font-bold">
             <img src={currentTrack.imageUrl} className="w-6 h-6 rounded-full" alt="Artist" />
             <span>{currentTrack.artist}</span>
@@ -49,10 +38,10 @@ export default function AlbumSong({ id, onBack }: AlbumSongProps) {
       <div className="p-8">
         <div className="flex items-center gap-8 mb-8">
           <button 
-            onClick={() => PlayTrack(currentTrack)}
-            className="w-14 h-14 flex items-center justify-center rounded-full bg-green-500 text-black hover:scale-105 transition active:scale-95"
+            onClick={TogglePlay}
+            className="w-14 h-14 flex items-center justify-center rounded-full bg-green-500 text-black hover:scale-105 transition active:scale-95 cursor-pointer"
           >
-            <Play fill="black" size={28} />
+            {isPlaying ?  <Pause size={29} fill="black"/>: <Play size={29} fill="black"/>}
           </button>
           <PlusCircle size={32} className="text-zinc-400 hover:text-white cursor-pointer" />
           <div className="ml-auto flex items-center gap-2 text-zinc-400">

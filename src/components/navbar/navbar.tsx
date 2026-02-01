@@ -4,13 +4,15 @@ import { IoIosSearch } from "react-icons/io";
 import { FaCircleArrowDown } from "react-icons/fa6";
 import { IoNotifications } from "react-icons/io5";
 import { PiUsersThree } from "react-icons/pi";
+import { usePlayer } from "@/context/PlayerContext";
 export default function Navbar() {
+  const { setViewAlbum } = usePlayer();
   return (
     <nav className="w-full top-0 left-0 z-50">
       <div className="flex items-center justify-between space-x-4  h-[4rem] pl-2">
         <div className="flex items-center space-x-4 p-4 w-full">
           <FaSpotify size={35} color="#FFF" />
-          <button className="hover:transform hover:scale-110 transition-all duration-200 ease-in-out cursor-pointer">
+          <button className="hover:transform hover:scale-110 transition-all duration-200 ease-in-out cursor-pointer" onClick={() => setViewAlbum(false)}>
             <MdHome size={46} className="text-gray-200 bg-gray-800 p-2 rounded-full hover:text-white" />
           </button>
           <div className="flex items-center justify-center">

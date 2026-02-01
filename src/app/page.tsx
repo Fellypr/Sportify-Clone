@@ -14,7 +14,7 @@ export default function SpotifyClone() {
   const [rightWidth, setRightWidth] = useState(300);
   const isResizingLeft = useRef(false);
   const isResizingRight = useRef(false);
-  const {isPlaying} = usePlayer();
+  const {viewAlbum} = usePlayer();
 
   useEffect(() => {
     const stopResizing = () => {
@@ -84,7 +84,7 @@ export default function SpotifyClone() {
           </aside>
 
           <main className="flex-1 bg-gradient-to-b from-zinc-900 to-zinc-950 rounded-lg overflow-y-auto  scrollbar-spotify">
-            {isPlaying ?  <AlbumSong /> : <FeedPrincipal />}
+            {viewAlbum ?  <AlbumSong /> : <FeedPrincipal />}
           </main>
 
           <aside

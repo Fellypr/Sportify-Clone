@@ -14,7 +14,7 @@ interface Song {
 }
 export default function FeedPrincipal() {
   const [songs, SetSongs] = useState<Song[]>([]);
-  const {PlayTrack} = usePlayer();
+  const {ViewAlbum} = usePlayer();
 
   useEffect(() => {
     fetch("/data/songsDate.json")
@@ -35,7 +35,6 @@ export default function FeedPrincipal() {
         console.error("Error fetching songs:", error);
       });
   }, []);
-  console.log(songs);
   return (
     <div className="p-6">
       <div className="flex gap-2">
@@ -55,7 +54,7 @@ export default function FeedPrincipal() {
           <div
             key={item.id}
             className="bg-white/5 group rounded flex items-center gap-4 overflow-hidden hover:bg-white/10 transition-colors cursor-pointer w-auto h-[40px]"
-            onClick={() => PlayTrack(item)}
+            onClick={() => ViewAlbum(item)}
           >
             <img
               src={item.imageUrl}
