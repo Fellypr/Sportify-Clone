@@ -19,20 +19,11 @@ interface AlbumSongProps {
 }
 
 export default function AlbumSong({ id, onBack }: AlbumSongProps) {
-  const { PlayTrack } = usePlayer();
-  const [song, setSong] = useState<Song | null>(null);
+  const { currentTrack,PlayTrack } = usePlayer();
 
-  useEffect(() => {
-    fetch("/data/songsDate.json")
-      .then((res) => res.json())
-      .then((data) => {
-        const allSongs = Array.isArray(data) ? data : data.songs;
-        const found = allSongs.find((s: Song) => s.id === id);
-        setSong(found);
-      });
-  }, [id]);
 
-  if (!song) return <div className="p-8 text-zinc-500">Carregando...</div>;
+
+  if (!currentTrack) return <div className="p-8 text-zinc-500">Carregando...</div>;
 
   return (
     <div className="flex-1 bg-zinc-900 overflow-y-auto scrollbar-spotify rounded-lg">
@@ -42,14 +33,14 @@ export default function AlbumSong({ id, onBack }: AlbumSongProps) {
         </button>
       </nav>
 
-      <header className={`p-8 flex items-end gap-6 bg-gradient-to-b ${song.themeColor || 'from-zinc-700'} to-zinc-900`}>
-        <img src={song.imageUrl} alt={song.title} className="w-52 h-52 shadow-2xl rounded-sm" />
+      <header className={`p-8 flex items-end gap-6 bg-gradient-to-b ${currentTrack?.themeColor || 'from-zinc-700'} to-zinc-900`}>
+        <img src={currentTrack.imageUrl} alt={currentTrack.title} className="w-52 h-52 shadow-2xl rounded-sm" />
         <div className="flex flex-col">
           <span className="text-sm font-bold uppercase">Single</span>
-          <h1 className="text-7xl font-black mt-2 mb-6">{song.title}</h1>
+          <h1 className="text-7xl font-black mt-2 mb-6">{currentTrack.title}</h1>
           <div className="flex items-center gap-2 text-sm font-bold">
-            <img src={song.imageUrl} className="w-6 h-6 rounded-full" alt="Artist" />
-            <span>{song.artist}</span>
+            <img src={currentTrack.imageUrl} className="w-6 h-6 rounded-full" alt="Artist" />
+            <span>{currentTrack.artist}</span>
             <span className="text-zinc-300 font-normal">• 2024 • 1 música</span>
           </div>
         </div>
@@ -58,7 +49,7 @@ export default function AlbumSong({ id, onBack }: AlbumSongProps) {
       <div className="p-8">
         <div className="flex items-center gap-8 mb-8">
           <button 
-            onClick={() => PlayTrack(song)}
+            onClick={() => PlayTrack(currentTrack)}
             className="w-14 h-14 flex items-center justify-center rounded-full bg-green-500 text-black hover:scale-105 transition active:scale-95"
           >
             <Play fill="black" size={28} />
@@ -80,14 +71,14 @@ export default function AlbumSong({ id, onBack }: AlbumSongProps) {
           </thead>
           <tbody>
             <tr 
-              onClick={() => PlayTrack(song)}
+              onClick={() => PlayTrack(currentTrack)}
               className="group hover:bg-white/10 rounded-md transition-colors cursor-pointer"
             >
               <td className="py-4 text-center text-zinc-400 group-hover:text-white">1</td>
               <td className="py-4">
                 <div className="flex flex-col">
-                  <span className="text-white font-medium">{song.title}</span>
-                  <span className="text-zinc-400 text-sm group-hover:text-white">{song.artist}</span>
+                  <span className="text-white font-medium">{currentTrack.title}</span>
+                  <span className="text-zinc-400 text-sm group-hover:text-white">{currentTrack.artist}</span>
                 </div>
               </td>
               <td className="py-4 text-right pr-4 text-zinc-400 text-sm">3:45</td>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import PlayerProvider, { usePlayer } from "@/context/PlayerContext";
+import { usePlayer } from "@/context/PlayerContext";
 import Navbar from "@/components/navbar/navbar";
 import Biblioteca from "@/components/biblioteca/biblioteca";
 import FeedPrincipal from "@/components/feedPrincipal/FeedPrincipal";
@@ -14,7 +14,7 @@ export default function SpotifyClone() {
   const [rightWidth, setRightWidth] = useState(300);
   const isResizingLeft = useRef(false);
   const isResizingRight = useRef(false);
-  const [view, SetView] = useState<"feed" | "album">("album");
+  const {isPlaying} = usePlayer();
 
   useEffect(() => {
     const stopResizing = () => {
@@ -53,7 +53,6 @@ export default function SpotifyClone() {
   };
 
   return (
-    <PlayerProvider>
       <div className="h-screen flex flex-col bg-black text-zinc-100 p-2 overflow-hidden select-none">
         <style
           dangerouslySetInnerHTML={{
@@ -85,7 +84,7 @@ export default function SpotifyClone() {
           </aside>
 
           <main className="flex-1 bg-gradient-to-b from-zinc-900 to-zinc-950 rounded-lg overflow-y-auto  scrollbar-spotify">
-            {view === "feed" ?  <AlbumSong /> : <FeedPrincipal />}
+            {isPlaying ?  <AlbumSong /> : <FeedPrincipal />}
           </main>
 
           <aside
@@ -106,6 +105,5 @@ export default function SpotifyClone() {
           <Footer />
         </footer>
       </div>
-    </PlayerProvider>
   );
 }
