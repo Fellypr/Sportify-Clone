@@ -2,19 +2,18 @@
 
 import { Play, PlusCircle, Clock, List, Pause } from "lucide-react";
 import { usePlayer } from "@/context/PlayerContext";
-import { useEffect, useState } from "react";
 
-interface Song {
-  id: number;
-  title: string;
-  artist: string;
-  audioUrl: string;
-  imageUrl: string;
-  themeColor: string;
-}
+// interface Song {
+//   id: number;
+//   title: string;
+//   artist: string;
+//   audioUrl: string;
+//   imageUrl: string;
+//   themeColor: string;
+// }
 
 export default function AlbumSong() {
-  const { currentTrack,TogglePlay,isPlaying } = usePlayer();
+  const { currentTrack,TogglePlay,isPlaying,PlayTrack } = usePlayer();
 
 
 
