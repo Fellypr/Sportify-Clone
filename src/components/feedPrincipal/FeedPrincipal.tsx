@@ -54,7 +54,15 @@ export default function FeedPrincipal() {
           <div
             key={item.id}
             className="bg-white/5 group rounded flex items-center gap-4 overflow-hidden hover:bg-white/10 transition-colors cursor-pointer w-auto h-[40px]"
-            onClick={() => ViewAlbum(item)}
+            onClick={() => {
+              const sigleAlbum ={
+                id: item.id,
+                name: item.title,
+                cover: item.imageUrl,
+                songsIds: [item.id],
+              };
+              ViewAlbum(item, sigleAlbum, [item]); 
+            }}
           >
             <img
               src={item.imageUrl}

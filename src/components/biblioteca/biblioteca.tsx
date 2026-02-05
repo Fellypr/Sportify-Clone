@@ -4,10 +4,10 @@ import InputBiblioteca from "../input-biblioteca/InputBiblioteca";
 import CardBiblioteca from "../card-biblioteca/CardBiblioteca";
 import bibliotecas from "../../../public/data/bibliotecas.json";
 import songs from "../../../public/data/songsDate.json";
-import { useState, useEffect } from "react";
+
 export default function Biblioteca() {
   function GetPlaylists(playlists) {
-    return playlists.songIds.map((id) =>
+    return playlists.songIds.map((id:number) =>
       songs.find((songs) => songs.id === id),
     );
   }
