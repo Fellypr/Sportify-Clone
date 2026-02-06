@@ -8,7 +8,9 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      
+    },
   },
   plugins: [
     plugin(function({ addUtilities }) {
@@ -17,7 +19,7 @@ const config: Config = {
         '.scrollbar-spotify': {
           '&::-webkit-scrollbar': {
             width: '10px' ,
-            height: '1px',
+            height: '1px',  
           },
           '&::-webkit-scrollbar-track': {
             background: 'transparent',

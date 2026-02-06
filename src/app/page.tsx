@@ -8,13 +8,20 @@ import FeedPrincipal from "@/components/feedPrincipal/FeedPrincipal";
 import TocandoAgora from "@/components/tocandoAgora/TocandoAgora";
 import Footer from "@/components/footer/fotter";
 import AlbumSong from "@/components/feedPrincipal/album-song/AlbumSong";
+import FullScreen from "@/components/full-screen/FullScreen";
 
 export default function SpotifyClone() {
+  const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [leftWidth, setLeftWidth] = useState(280);
   const [rightWidth, setRightWidth] = useState(300);
   const isResizingLeft = useRef(false);
   const isResizingRight = useRef(false);
   const {viewAlbum} = usePlayer();
+
+  const toggleFullscreen = (): void => {
+      setIsFullScreen(!isFullScreen);
+  };
 
   useEffect(() => {
     const stopResizing = () => {
@@ -99,10 +106,14 @@ export default function SpotifyClone() {
               <TocandoAgora />
             </div>
           </aside>
+          {isFullScreen && (
+            <FullScreen/>
+          )}
+          
         </div>
 
-        <footer className="bg-black border-t border-zinc-900 px-6 py-4 flex items-center justify-between">
-          <Footer />
+        <footer className="bg-black border-t border-zinc-900 px-6 py-4 flex items-center justify-between z-30">
+          <Footer  toggleFullscreen={toggleFullscreen}/>
         </footer>
       </div>
   );

@@ -40,7 +40,6 @@ export default function PlayerProvider({ children }: { children: ReactNode }) {
     function ViewAlbum(item: Track, album: Album, songs: Track[]) {
         setSelectedAlbum(album);
         setAlbumSongs(songs);
-        setCurrentTrack(item);
         setViewAlbum(true);
     }
 

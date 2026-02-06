@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { usePlayer } from "@/context/PlayerContext";
 
-export default function Footer() {
+export default function Footer({toggleFullscreen}: {toggleFullscreen: () => void}) {
   const { currentTrack, isPlaying, TogglePlay } = usePlayer();
 
   const [progress, setProgress] = useState<number>(0);
@@ -78,7 +78,7 @@ export default function Footer() {
       <div className="flex items-center gap-3 w-[30%]">
         <div className="w-14 h-14 bg-zinc-800 rounded shadow-md overflow-hidden">
           <img
-            src="/covers/album-art.jpg"
+            src={currentTrack?.imageUrl || ""}
             alt="Capa"
             className="w-full h-full object-cover"
           />
@@ -117,6 +117,7 @@ export default function Footer() {
               <Play fill="black" size={20} />
             )}
           </button>
+          
 
           <SkipForward
             size={20}
@@ -170,6 +171,7 @@ export default function Footer() {
         <Maximize2
           size={18}
           className="text-zinc-400 hover:text-white cursor-pointer"
+          onClick={toggleFullscreen}
         />
       </div>
     </footer>
