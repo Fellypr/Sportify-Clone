@@ -16,7 +16,11 @@ import {
 } from "lucide-react";
 import { usePlayer } from "@/context/PlayerContext";
 
-export default function Footer({toggleFullscreen}: {toggleFullscreen: () => void}) {
+export default function Footer({
+  toggleFullscreen,
+}: {
+  toggleFullscreen: () => void;
+}) {
   const { currentTrack, isPlaying, TogglePlay } = usePlayer();
 
   const [progress, setProgress] = useState<number>(0);
@@ -27,22 +31,22 @@ export default function Footer({toggleFullscreen}: {toggleFullscreen: () => void
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    const audio = audioRef.current; 
-    if (!audio || !currentTrack) return;
-    audio.load();
-    if(isPlaying){
-      const playPromise = audio.play();
-
-      if(playPromise !== undefined){
-        playPromise.catch(error =>{
-          console.log("erro ao tocar audio:",error)
-        })
-
-      }else{
-        audio.pause();
+    if (audioRef.current && currentTrack) {
+      audioRef.current.load();
+      if (isPlaying) {
+        audioRef.current.play().catch((error) => console.log(error));
       }
     }
-  },[currentTrack,isPlaying]);
+  }, [currentTrack]);
+
+  useEffect(() => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.play().catch((error) => console.log(error));
+    } else {
+      audioRef.current.pause();
+    }
+  }, [isPlaying]);
 
   const formatTime = (time: number) => {
     if (isNaN(time)) return "0:00";
@@ -65,6 +69,19 @@ export default function Footer({toggleFullscreen}: {toggleFullscreen: () => void
       setProgress((current / total) * 100 || 0);
     }
   };
+
+  function HandleProgressChange(e: React.MouseEvent<HTMLInputElement>) {
+    if (audioRef.current && duration > 0) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const width = rect.width;
+      const percent = x / width;
+      const newTime = percent * duration;
+
+      audioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+    }
+  }
 
   return (
     <footer className="w-full flex items-center justify-between">
@@ -117,7 +134,6 @@ export default function Footer({toggleFullscreen}: {toggleFullscreen: () => void
               <Play fill="black" size={20} />
             )}
           </button>
-          
 
           <SkipForward
             size={20}
@@ -130,10 +146,17 @@ export default function Footer({toggleFullscreen}: {toggleFullscreen: () => void
           <span className="text-xs text-zinc-400 w-10 text-right">
             {formatTime(currentTime)}
           </span>
-          <div className="h-1 rounded-full flex-1 bg-zinc-600 relative overflow-hidden">
+          <div
+            className="h-1 rounded-full flex-1 bg-zinc-600 relative overflow-hidden"
+            onClick={HandleProgressChange}
+          >
             <div
               className="bg-zinc-200 h-full rounded-full group-hover:bg-green-500 transition-colors"
               style={{ width: `${progress}%` }}
+            />
+            <div
+              className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity rounded-full"
+              style={{ left: `calc(${progress}% - 6px)` }}
             />
           </div>
           <span className="text-xs text-zinc-400 w-10">
@@ -177,4 +200,3 @@ export default function Footer({toggleFullscreen}: {toggleFullscreen: () => void
     </footer>
   );
 }
-

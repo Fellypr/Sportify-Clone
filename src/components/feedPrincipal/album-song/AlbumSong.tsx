@@ -16,12 +16,12 @@ export default function AlbumSong() {
         <ChevronLeft size={24} />
       </button>
 
-      <header className={`mt-10 p-8 flex items-end gap-6 bg-gradient-to-b ${albumSongs[0]?.themeColor || 'from-purple-700'} to-zinc-900`}>
+      <header className={`mt-10 p-8 flex items-start gap-6 bg-gradient-to-b ${albumSongs[0]?.themeColor || 'from-purple-700'} to-zinc-900`}>
         <img src={selectedAlbum.cover} alt={selectedAlbum.name} className="w-52 h-52 shadow-2xl rounded-sm object-cover" />
         <div className="flex flex-col">
           <span className="text-[12px] font-bold uppercase">Playlist</span>
-          <h1 className="text-6xl font-black mt-2 mb-6 tracking-tighter">{selectedAlbum.name}</h1>
-          <div className="flex items-center gap-2 text-sm font-bold">
+          <h1 className="text-5xl font-black mt-2 mb-12 leading-tight tracking-tighter">{selectedAlbum.name}</h1>
+          <div className="flex items-center gap-2 text-sm font-bold mb-6">
             <span>Seu Usuário</span>
             <span className="text-zinc-300 font-normal">• {albumSongs.length} músicas</span>
           </div>

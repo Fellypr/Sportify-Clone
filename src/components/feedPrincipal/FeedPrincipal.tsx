@@ -78,10 +78,10 @@ export default function FeedPrincipal() {
       </div>
 
       <p className="text-sm text-zinc-400 mt-8">Feito para </p>
-      <h2 className="text-2xl font-bold ">Fellype kenned</h2>
+      <h2 className="text-2xl font-bold ">Voce</h2>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-1 mt-4">
-        {songs.slice(0, 8).map((item) => (
+        {songs.map((item) => (
           <div className="w-[160px] p-3 rounded-md hover:bg-zinc-900 transition-colors cursor-pointer" key={item.id}>
             <img className="w-full aspect-square bg-zinc-700 rounded-md mb-2 shadow-lg" src={item.imageUrl} alt={item.title} />
             <strong className="font-normal">{item.title}</strong>
