@@ -12,9 +12,8 @@ import FullScreen from "@/components/full-screen/FullScreen";
 
 export default function SpotifyClone() {
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [leftWidth, setLeftWidth] = useState(280);
-  const [rightWidth, setRightWidth] = useState(300);
+  const [leftWidth, setLeftWidth] = useState<number>(280);
+  const [rightWidth, setRightWidth] = useState<number>(300);
   const isResizingLeft = useRef(false);
   const isResizingRight = useRef(false);
   const {viewAlbum} = usePlayer();

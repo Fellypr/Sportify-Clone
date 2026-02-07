@@ -1,7 +1,16 @@
+import { usePlayer } from "@/context/PlayerContext";
+import Image from "next/image";
 export default function FullScreen() {
+    const { currentTrack } = usePlayer();
     return (
-        <div className="absolute bg-amber-300 w-[98.8%] h-[72%] z-20 flex items-center justify-center rounded-t-2xl">
-            <img src="https://imgs.search.brave.com/rlXUcmEVAom29V-KhExhTLwianZ5Y9htZ7kMKlqKdOc/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1Qk1tWTNNV1U0/TjJJdFl6ZGpPUzAw/TTJVekxXSmtOalV0/TjJKaU5qSm1aVEl6/WkdNMFhrRXlYa0Zx/Y0djQC5qcGc" className="w-90 rounded-4xl object-cover shadow-xl/50"/>
+        <div 
+        className="absolute w-[98.8%] h-[72%] z-20 flex items-center justify-center flex-col rounded-t-2xl"
+        style={{backgroundColor:currentTrack?.themeColor}}
+        >
+            <header className="w-[97%] flex items-center p-4 relative bottom-12 text-[16px] font-bold">
+                <p>{currentTrack?.title}</p>
+            </header>
+            <Image src={currentTrack?.imageUrl || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4TL3YUIC2cny9dklenfcET7Q5oOAH_T1KRg&s'} alt={currentTrack?.title || 'titulo'} width={300} height={300} quality={75} priority sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="rounded-3xl shadow-2xl/50 object-cover"/>
         </div>
     );
 }
