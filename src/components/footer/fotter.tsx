@@ -21,7 +21,7 @@ export default function Footer({
 }: {
   toggleFullscreen: () => void;
 }) {
-  const { currentTrack, isPlaying, TogglePlay } = usePlayer();
+  const { currentTrack,albumSongs, isPlaying, TogglePlay, PlayTrack } = usePlayer();
 
   const [progress, setProgress] = useState<number>(0);
   const [currentTime, setCurrentTime] = useState<number>(0);
@@ -82,6 +82,23 @@ export default function Footer({
       setCurrentTime(newTime);
     }
   }
+  function SkipMusic (){
+    if(!currentTrack || albumSongs.length === 0) return;
+
+    const indexSong = albumSongs.findIndex((song) => song.title === currentTrack.title);
+    const nextSongIndex = (indexSong + 1) % albumSongs.length;
+    const nextSong = albumSongs[nextSongIndex];
+
+    PlayTrack(nextSong);
+
+  }
+  function BackMusic(){
+    if(!currentTrack || albumSongs.length === 0) return;
+    const indexSong = albumSongs.findIndex((song) => song.title === currentTrack.title);
+    const nextSongIndex = (indexSong - 1 + albumSongs.length) % albumSongs.length;
+    const nextSong = albumSongs[nextSongIndex];
+    PlayTrack(nextSong);
+  }
 
   return (
     <footer className="w-full flex items-center justify-between">
@@ -122,6 +139,7 @@ export default function Footer({
           <SkipBack
             size={20}
             className="hover:text-white cursor-pointer fill-zinc-400"
+            onClick={BackMusic}
           />
 
           <button
@@ -138,6 +156,7 @@ export default function Footer({
           <SkipForward
             size={20}
             className="hover:text-white cursor-pointer fill-zinc-400"
+            onClick={SkipMusic}
           />
           <Repeat size={20} className="hover:text-white cursor-pointer" />
         </div>
