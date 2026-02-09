@@ -26,6 +26,7 @@ interface PlayerContextType {
     TogglePlay: () => void;
     ViewAlbum: (item: Track, album: Album, songs: Track[]) => void;
     CloseAlbum: () => void;
+    setViewAlbum: (value: boolean) => void;
 }
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
@@ -66,7 +67,8 @@ export default function PlayerProvider({ children }: { children: ReactNode }) {
             viewAlbum, 
             selectedAlbum, 
             albumSongs, 
-            CloseAlbum 
+            CloseAlbum,
+            setViewAlbum 
         }}>
             {children}
         </PlayerContext.Provider>

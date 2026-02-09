@@ -9,6 +9,8 @@ import TocandoAgora from "@/components/tocandoAgora/TocandoAgora";
 import Footer from "@/components/footer/fotter";
 import AlbumSong from "@/components/feedPrincipal/album-song/AlbumSong";
 import FullScreen from "@/components/full-screen/FullScreen";
+import MelhorResultado from "@/components/feedPrincipal/melhor-resultado/MelhorResultado";
+import songsDate from "../../public/data/songsDate.json";
 
 export default function SpotifyClone() {
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
@@ -16,10 +18,15 @@ export default function SpotifyClone() {
   const [rightWidth, setRightWidth] = useState<number>(300);
   const isResizingLeft = useRef(false);
   const isResizingRight = useRef(false);
-  const {viewAlbum} = usePlayer();
+  const { viewAlbum } = usePlayer();
+  const [search, setSearch] = useState<string>("");
+
+  const searchMusic = songsDate.filter((song) =>
+    song.title.toLowerCase().includes(search.toLowerCase()),
+  );
 
   const toggleFullscreen = (): void => {
-      setIsFullScreen(!isFullScreen);
+    setIsFullScreen(!isFullScreen);
   };
 
   useEffect(() => {
@@ -59,61 +66,66 @@ export default function SpotifyClone() {
   };
 
   return (
-      <div className="h-screen flex flex-col bg-black text-zinc-100 p-2 overflow-hidden select-none">
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
+    <div className="h-screen flex flex-col bg-black text-zinc-100 p-2 overflow-hidden select-none">
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         .scrollbar-spotify::-webkit-scrollbar { width: 8px; }
         .scrollbar-spotify::-webkit-scrollbar-track { background: transparent; }
         .scrollbar-spotify::-webkit-scrollbar-thumb { background: #4d4d4d; border-radius: 10px; }
       `,
-          }}
-        />
+        }}
+      />
 
-        <header className="mb-2">
-          <Navbar />
-        </header>
+      <header className="mb-2">
+        <Navbar setSearch={setSearch} />
+      </header>
 
-        <div className="flex flex-1 overflow-hidden gap-1">
-          <aside
-            style={{ width: leftWidth }}
-            className="bg-zinc-950 rounded-lg flex flex-col overflow-hidden relative"
-          >
-            <div className="flex-1 overflow-y-hidden p-3 scrollbar-spotify">
-              <Biblioteca />
-            </div>
+      <div className="flex flex-1 overflow-hidden gap-1">
+        <aside
+          style={{ width: leftWidth }}
+          className="bg-zinc-950 rounded-lg flex flex-col overflow-hidden relative"
+        >
+          <div className="flex-1 overflow-y-hidden p-3 scrollbar-spotify">
+            <Biblioteca />
+          </div>
 
-            <div
-              onMouseDown={handleMouseDownLeft}
-              className="absolute top-0 right-0 w-[2px] h-full cursor-grab hover:bg-zinc-500 active:bg-zinc-200 transition-colors z-50"
-            />
-          </aside>
+          <div
+            onMouseDown={handleMouseDownLeft}
+            className="absolute top-0 right-0 w-[2px] h-full cursor-grab hover:bg-zinc-500 active:bg-zinc-200 transition-colors z-50"
+          />
+        </aside>
 
-          <main className="flex-1 bg-gradient-to-b from-zinc-900 to-zinc-950 rounded-lg overflow-y-auto  scrollbar-spotify">
-            {viewAlbum ?  <AlbumSong /> : <FeedPrincipal />}
-          </main>
+        <main className="flex-1 bg-gradient-to-b from-zinc-900 to-zinc-950 rounded-lg overflow-y-auto  scrollbar-spotify">
+          {(() => {
+            if (search.length > 0) {
+              return <MelhorResultado searchMusic={searchMusic} setSearch={setSearch} />;
+            }
+            if (viewAlbum) {
+              return <AlbumSong />;
+            }
+            return <FeedPrincipal />;
+          })()}
+        </main>
 
-          <aside
-            style={{ width: rightWidth }}
-            className="hidden xl:flex bg-zinc-950 rounded-lg flex-col overflow-hidden relative"
-          >
-            <div
-              onMouseDown={handleMouseDownRight}
-              className="absolute top-0 left-0 w-[2px] h-full cursor-grab hover:bg-zinc-500 active:bg-zinc-200 transition-colors z-50"
-            />
-            <div className="flex-1 overflow-y-auto p-4 scrollbar-spotify">
-              <TocandoAgora />
-            </div>
-          </aside>
-          {isFullScreen && (
-            <FullScreen/>
-          )}
-          
-        </div>
-
-        <footer className="bg-black border-t border-zinc-900 px-6 py-4 flex items-center justify-between z-30">
-          <Footer  toggleFullscreen={toggleFullscreen}/>
-        </footer>
+        <aside
+          style={{ width: rightWidth }}
+          className="hidden xl:flex bg-zinc-950 rounded-lg flex-col overflow-hidden relative"
+        >
+          <div
+            onMouseDown={handleMouseDownRight}
+            className="absolute top-0 left-0 w-[2px] h-full cursor-grab hover:bg-zinc-500 active:bg-zinc-200 transition-colors z-50"
+          />
+          <div className="flex-1 overflow-y-auto p-4 scrollbar-spotify">
+            <TocandoAgora />
+          </div>
+        </aside>
+        {isFullScreen && <FullScreen />}
       </div>
+
+      <footer className="bg-black border-t border-zinc-900 px-6 py-4 flex items-center justify-between z-30">
+        <Footer toggleFullscreen={toggleFullscreen} />
+      </footer>
+    </div>
   );
 }
