@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useState, useContext, ReactNode } from "react";
+import { createContext, useState, useContext, ReactNode, useEffect } from "react";
 
 interface Track {
   title: string;
@@ -32,7 +32,13 @@ interface PlayerContextType {
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
 
 export default function PlayerProvider({ children }: { children: ReactNode }) {
-    const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
+    const [currentTrack, setCurrentTrack] = useState<Track | null>(() => {
+        if(typeof window !== 'undefined') {
+        const saved = localStorage.getItem('currentTrack');
+        return saved ? JSON.parse(saved) : null
+        }
+        return null;
+    });
     const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);
     const [albumSongs, setAlbumSongs] = useState<Track[]>([]);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -56,6 +62,15 @@ export default function PlayerProvider({ children }: { children: ReactNode }) {
     function TogglePlay() {
         setIsPlaying(!isPlaying);
     }
+    useEffect(() => {
+        if(currentTrack){
+            localStorage.setItem('currentTrack', JSON.stringify(currentTrack));
+        }
+    },[currentTrack])
+
+    
+
+
 
     return (
         <PlayerContext.Provider value={{ 

@@ -11,18 +11,20 @@ import AlbumSong from "@/components/feedPrincipal/album-song/AlbumSong";
 import FullScreen from "@/components/full-screen/FullScreen";
 import MelhorResultado from "@/components/feedPrincipal/melhor-resultado/MelhorResultado";
 import songsDate from "../../public/data/songsDate.json";
+import { LayoutList } from "lucide-react";
 
 export default function SpotifyClone() {
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
   const [leftWidth, setLeftWidth] = useState<number>(280);
   const [rightWidth, setRightWidth] = useState<number>(300);
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
   const isResizingLeft = useRef(false);
   const isResizingRight = useRef(false);
   const { viewAlbum } = usePlayer();
   const [search, setSearch] = useState<string>("");
 
   const searchMusic = songsDate.filter((song) =>
-    song.title.toLowerCase().includes(search.toLowerCase()),
+    song.title.toLowerCase().includes(search.toLowerCase())
   );
 
   const toggleFullscreen = (): void => {
@@ -39,11 +41,14 @@ export default function SpotifyClone() {
     const resize = (e: MouseEvent) => {
       if (isResizingLeft.current) {
         const newWidth = e.clientX;
-        if (newWidth > 280 && newWidth < 400) setLeftWidth(newWidth);
+        if (newWidth > 250 && newWidth < 350) {
+          setLeftWidth(newWidth);
+          setIsCollapsed(newWidth < 255);
+        }
       }
       if (isResizingRight.current) {
         const newWidth = window.innerWidth - e.clientX;
-        if (newWidth > 300 && newWidth < 400) setRightWidth(newWidth);
+        if (newWidth > 400 && newWidth < 500) setRightWidth(newWidth);
       }
     };
 
@@ -77,26 +82,41 @@ export default function SpotifyClone() {
         }}
       />
 
-      <header className="mb-2">
+      <header className="mb-2 hidden md:block">
         <Navbar setSearch={setSearch} />
       </header>
 
       <div className="flex flex-1 overflow-hidden gap-1">
         <aside
-          style={{ width: leftWidth }}
-          className="bg-zinc-950 rounded-lg flex flex-col overflow-hidden relative"
+          style={{ width: isCollapsed ? 72 : leftWidth }}
+          className="hidden md:flex bg-zinc-950 rounded-lg flex-col overflow-hidden relative transition-[width] duration-75 ease-out"
         >
-          <div className="flex-1 overflow-y-hidden p-3 scrollbar-spotify">
-            <Biblioteca />
+          <div className={`flex-1 overflow-x-hidden ${isCollapsed ? "items-center" : "p-3"} scrollbar-spotify overflow-y-auto`}>
+            {isCollapsed ? (
+              <div className="flex flex-col items-center py-4 gap-4">
+                <button 
+                  onClick={() => setIsCollapsed(false)}
+                  className="text-zinc-400 hover:text-white transition"
+                >
+                  <LayoutList size={26} />
+                </button>
+                <Biblioteca  isCollapsed={isCollapsed}/>
+              </div>
+            ) : (
+              <Biblioteca  isCollapsed={isCollapsed}/>
+            )}
           </div>
-
-          <div
-            onMouseDown={handleMouseDownLeft}
-            className="absolute top-0 right-0 w-[2px] h-full cursor-grab hover:bg-zinc-500 active:bg-zinc-200 transition-colors z-50"
-          />
+            <div
+              onMouseDown={handleMouseDownLeft}
+              className="absolute top-0 right-0 w-[3px] h-full cursor-col-resize hover:bg-zinc-500 active:bg-zinc-200 transition-colors z-50"
+            />
         </aside>
 
-        <main className="flex-1 bg-gradient-to-b from-zinc-900 to-zinc-950 rounded-lg overflow-y-auto  scrollbar-spotify">
+        <main className="flex-1 bg-gradient-to-b from-zinc-900 to-zinc-950 rounded-lg overflow-y-auto scrollbar-spotify relative">
+          <div className="md:hidden sticky top-0 z-40 bg-zinc-900/90 backdrop-blur-sm p-4">
+            <Navbar setSearch={setSearch} />
+          </div>
+          
           {(() => {
             if (search.length > 0) {
               return <MelhorResultado searchMusic={searchMusic} setSearch={setSearch} />;
@@ -114,16 +134,17 @@ export default function SpotifyClone() {
         >
           <div
             onMouseDown={handleMouseDownRight}
-            className="absolute top-0 left-0 w-[2px] h-full cursor-grab hover:bg-zinc-500 active:bg-zinc-200 transition-colors z-50"
+            className="absolute top-0 left-0 w-[3px] h-full cursor-col-resize hover:bg-zinc-500 active:bg-zinc-200 transition-colors z-50"
           />
           <div className="flex-1 overflow-y-auto p-4 scrollbar-spotify">
             <TocandoAgora />
           </div>
         </aside>
+        
         {isFullScreen && <FullScreen />}
       </div>
 
-      <footer className="bg-black border-t border-zinc-900 px-6 py-4 flex items-center justify-between z-30">
+      <footer className="bg-black md:border-t border-zinc-900 px-2 md:px-6 py-2 md:py-4 flex items-center justify-between z-50">
         <Footer toggleFullscreen={toggleFullscreen} />
       </footer>
     </div>

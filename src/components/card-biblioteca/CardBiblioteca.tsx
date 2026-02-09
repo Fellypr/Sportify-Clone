@@ -9,7 +9,7 @@ interface Playlist {
   songIds: number[];
 }
 
-export default function CardBiblioteca({ playlists, playlistsSongs }: { playlists: Playlist, playlistsSongs: any[] }) {
+export default function CardBiblioteca({ playlists, playlistsSongs,isCollapsed }: { playlists: Playlist, playlistsSongs: any[] }) {
   const { ViewAlbum } = usePlayer();
 
   return (
@@ -20,10 +20,13 @@ export default function CardBiblioteca({ playlists, playlistsSongs }: { playlist
       <div className="w-12 h-12 bg-zinc-800 rounded flex items-center justify-center shadow-lg overflow-hidden">
         <img src={playlists.cover} alt={playlists.name} className="w-full h-full object-cover" />
       </div>
-      <div>
+
+      {!isCollapsed && (
+        <div>
         <p className="text-sm font-bold text-zinc-100">{playlists.name}</p>
         <p className="text-xs text-zinc-400">Playlist • {playlistsSongs.length} músicas</p>
       </div>
+      )}
     </div>
   );
 }

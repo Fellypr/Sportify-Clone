@@ -1,4 +1,4 @@
-import { Play, PlusCircle, Clock } from "lucide-react";
+import { Play } from "lucide-react";
 import { usePlayer } from "@/context/PlayerContext";
 
 interface SongSearch {
