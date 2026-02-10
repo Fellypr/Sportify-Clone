@@ -28,7 +28,7 @@ export default function Navbar({ setSearch }: { setSearch: (val: string) => void
             <input
               type="text"
               className="pl-10 md:pl-12 bg-zinc-800 text-white rounded-full py-2 w-full md:w-120 h-10 md:h-12 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300"
-              placeholder="O que vocẽ quer ouvir?"
+              placeholder="O que você quer ouvir?"
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>

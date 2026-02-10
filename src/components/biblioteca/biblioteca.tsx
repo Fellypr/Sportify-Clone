@@ -1,16 +1,23 @@
 "use client";
 
+import { useState } from "react";
 import InputBiblioteca from "../input-biblioteca/InputBiblioteca";
 import CardBiblioteca from "../card-biblioteca/CardBiblioteca";
 import bibliotecas from "../../../public/data/bibliotecas.json";
 import songs from "../../../public/data/songsDate.json";
 
 export default function Biblioteca({ isCollapsed }: { isCollapsed: boolean }) {
-  function GetPlaylists(playlists) {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  function GetPlaylists(playlists: any) {
     return playlists.songIds.map((id: number) =>
-      songs.find((songs) => songs.id === id),
+      songs.find((song) => song.id === id),
     );
   }
+
+  const filteredPlaylists = bibliotecas.filter((playlist) =>
+    playlist.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
@@ -28,8 +35,13 @@ export default function Biblioteca({ isCollapsed }: { isCollapsed: boolean }) {
 
       <div className="overflow-y-auto h-[500px] scrollbar-spotify ">
         <div className=" flex flex-col gap-1">
-          {!isCollapsed && <InputBiblioteca />}
-          {bibliotecas.map((playlists) => {
+          {!isCollapsed && (
+            <InputBiblioteca 
+              searchTerm={searchTerm} 
+              setSearchTerm={setSearchTerm} 
+            />
+          )}
+          {filteredPlaylists.map((playlists) => {
             const playlistsSongs = GetPlaylists(playlists);
             return (
               <CardBiblioteca

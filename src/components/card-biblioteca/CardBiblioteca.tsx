@@ -9,7 +9,7 @@ interface Playlist {
   songIds: number[];
 }
 
-export default function CardBiblioteca({ playlists, playlistsSongs,isCollapsed }: { playlists: Playlist, playlistsSongs: any[] }) {
+export default function CardBiblioteca({ playlists, playlistsSongs,isCollapsed }: { playlists: Playlist, playlistsSongs: any[], isCollapsed: boolean}) {
   const { ViewAlbum } = usePlayer();
 
   return (

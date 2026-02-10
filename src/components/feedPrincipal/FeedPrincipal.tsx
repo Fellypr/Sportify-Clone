@@ -59,7 +59,7 @@ export default function FeedPrincipal() {
                 id: item.id,
                 name: item.title,
                 cover: item.imageUrl,
-                songsIds: [item.id],
+                songsIds: [item.id]
               };
               ViewAlbum(item, sigleAlbum, [item]); 
             }}
@@ -78,11 +78,19 @@ export default function FeedPrincipal() {
       </div>
 
       <p className="text-sm text-zinc-400 mt-8">Feito para </p>
-      <h2 className="text-2xl font-bold ">Voce</h2>
+      <h2 className="text-2xl font-bold ">Você</h2>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-1 mt-4">
+      <div className="flex flex-wrap justify-around w-full gap-1 mt-4">
         {songs.map((item) => (
-          <div className="w-[160px] p-3 rounded-md hover:bg-zinc-900 transition-colors cursor-pointer" key={item.id}>
+          <div className="w-[160px] p-3 rounded-md hover:bg-zinc-900 transition-colors cursor-pointer" key={item.id} onClick={() => {
+            const sigleAlubum ={
+              id: item.id,
+                name: item.title,
+                cover: item.imageUrl,
+                songsIds: [item.id]
+            }
+            ViewAlbum(item, sigleAlubum, [item])
+          }}>
             <img className="w-full aspect-square bg-zinc-700 rounded-md mb-2 shadow-lg" src={item.imageUrl} alt={item.title} />
             <strong className="font-normal">{item.title}</strong>
             <p className="text-sm text-zinc-400 mt-1">{item.artist}</p>

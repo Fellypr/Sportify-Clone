@@ -48,7 +48,7 @@ export default function SpotifyClone() {
       }
       if (isResizingRight.current) {
         const newWidth = window.innerWidth - e.clientX;
-        if (newWidth > 400 && newWidth < 500) setRightWidth(newWidth);
+        if (newWidth > 300 && newWidth < 500) setRightWidth(newWidth);
       }
     };
 
