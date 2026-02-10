@@ -104,7 +104,7 @@ export default function Footer({
   ) => {
     if (audioRef.current && duration > 0) {
       const rect = e.currentTarget.getBoundingClientRect();
-      let clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+      const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
 
       const x = clientX - rect.left;
       const width = rect.width;

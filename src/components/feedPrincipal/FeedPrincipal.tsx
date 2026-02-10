@@ -59,7 +59,7 @@ export default function FeedPrincipal() {
                 id: item.id,
                 name: item.title,
                 cover: item.imageUrl,
-                songsIds: [item.id]
+                songIds: [item.id]
               };
               ViewAlbum(item, sigleAlbum, [item]); 
             }}
@@ -87,7 +87,7 @@ export default function FeedPrincipal() {
               id: item.id,
                 name: item.title,
                 cover: item.imageUrl,
-                songsIds: [item.id]
+                songIds: [item.id]
             }
             ViewAlbum(item, sigleAlubum, [item])
           }}>

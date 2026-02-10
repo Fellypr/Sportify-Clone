@@ -44,7 +44,7 @@ export default function ResultadosBusca({searchMusic,setSearch}:ResultadoBuscas)
                 id: searchMusic[0]?.id,
                 name: searchMusic[0]?.title,
                 cover: searchMusic[0]?.imageUrl,
-                songsIds: [searchMusic[0]?.id],
+                songIds: [searchMusic[0]?.id],
             }
             ViewAlbum(searchMusic[0], sigleAlbum, [searchMusic[0]])
             setSearch('')
